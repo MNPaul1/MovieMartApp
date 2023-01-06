@@ -12,4 +12,5 @@ router.route("/movies/:genre").get(getMoviesByGenre);
 router.route("/recommendedmovies/:movie_id").get(getRecommendedMovies);
 router.route("/languages/:language").get(getMoviesByLanguage);
 
+
 module.exports = router;
