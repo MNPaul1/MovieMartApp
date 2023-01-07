@@ -1,7 +1,7 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const errorHandler = require("./middleware/error");
-
+const path = require('path');
 const app = express();
 dotenv.config({ path: './config/config.env' })
 
@@ -16,6 +16,17 @@ app.use('/media',media)
 
 //custom error handler
 app.use(errorHandler)
+
+app.use(express.static(path.join(__dirname, "./client/build")));
+app.get("*", function (_, res) {
+  res.sendFile(
+    path.join(__dirname, "./client/build/index.html"),
+    function (err) {
+      res.status(500).send(err);
+    }
+  );
+});
+
 
 const PORT = process.env.PORT || 3000
 app.listen(PORT, () => {
