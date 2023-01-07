@@ -1,0 +1,115 @@
+.main-container{
+    padding: 3% 5% 5% 5%;
+    box-sizing: border-box;
+    font-size: medium;
+    color: white;
+    box-sizing: border-box;
+    overflow-x: hidden;
+}
+.main-container div{
+    box-sizing: border-box;
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 25px;
+    row-gap: 25px;
+}
+.main-container>*:nth-child(1){
+    width: 100%;
+    color: rgb(234, 233, 233);
+}
+.underline{
+    margin-top: 8px;
+    width: 60px;
+    height: 2px;
+    background-color: rgb(234, 233, 233);
+}
+.movie-container{
+    position: relative;
+    color: white;
+    background-color: #080808;
+    flex: 1;
+    max-width: 200px;
+    min-width: 180px;
+    border-radius: 12px;
+    display: flex;
+    flex-wrap: wrap;
+    line-height: 30px;
+    text-decoration: none;
+    box-sizing: border-box;
+}
+
+.movie-container img{
+    flex-grow: 1;
+    width: 100%;
+    min-height: inherit;
+    height: inherit;
+    min-height: 291.19px;
+}
+.movie-container>*:nth-child(2){
+    flex-grow: 1;
+    margin: 0;
+    width: 100%;
+    padding: 0 10px 0 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: clip;
+}
+.movie-container>*:nth-child(3){
+    flex-grow: 0.5;
+    padding: 0 0 10px 10px;
+
+}
+.movie-container>*:nth-child(4){
+    flex-grow: 0.5;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0 10px 10px 0;
+    font-size: inherit;
+}
+
+.movie-container>*:nth-child(5){
+    position: absolute;
+    line-height:normal;
+    border-radius: 5px;
+    right: 2%;
+    top: 2%;
+    padding: 4px;
+    box-sizing: border-box;
+    border: 1px solid white;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.movie-container>*:nth-child(1):hover{
+    cursor: pointer;
+    opacity: 0.5;
+}
+@media screen and (max-width:450px) {
+    .main-container{
+        padding: 3% 10px;
+        font-size: smaller;
+    }
+    .main-container div{
+        column-gap: 10px;
+        row-gap: 12px;
+    }
+    .movie-container{
+        min-width: 135px;
+        max-height: fit-content;
+    }
+    .movie-container img{
+        min-height: inherit;
+    }
+    
+}
+@media screen and (max-width:1024px){
+    .main-container{
+        padding: 3% 10px;
+    }
+    .main-container div{
+        column-gap: 8px;
+    }
+    .movie-container{
+        max-width: auto;
+    }
+}
