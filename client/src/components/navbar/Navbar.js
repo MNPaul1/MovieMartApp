@@ -41,18 +41,27 @@ export default function Navbar() {
     //setting windowWidth everytime when there is resize
     window.addEventListener("resize", handleResize, false);
     if (windowWidth <= 550) {
+      const menuIcon = document.querySelector(".menu");
+      const closeIcon = document.querySelector(".close");
       if (icon === 0) {
+        menuIcon.style.display = "block";
+        closeIcon.style.display = "none";
         document.getElementsByClassName(`nav-items`)[0].style.display = "none";
-      } else {
-        document.getElementsByClassName(`nav-items`)[0].style.display = "flex";
+      } 
+      else {
+        closeIcon.style.display = "block";
+        menuIcon.style.display = "none";
+        document.getElementsByClassName(`nav-items`)[0].style.display = "block";
       }
-    } else {
+
+
+    }else{
       // setIcon(preValue => preValue===0?1:0)
       document.getElementsByClassName(`nav-items`)[0].style.display = "flex";
     }
   }, [icon, windowWidth]);
 
-  const handleOnClick = (e) => {
+  const handleOnSearchClick = (e) => {
     const { value } = e.target;
     if (value === "") {
       navigate("/");
@@ -68,30 +77,16 @@ export default function Navbar() {
     ).style.display = "flex";
   };
 
-  const MouseLeave = () => {
+  const MouseLeave = (e) => {
     document.getElementsByClassName(`optionsContainer`)[options].style.display =
       "none";
-    handleIconClick();
-  };
-
-  const handleIconClick = () => {
-    const menuIcon = document.querySelector(".menu");
-    const closeIcon = document.querySelector(".close");
-    if (icon === 0) {
-      menuIcon.style.display = "none";
-      closeIcon.style.display = "block";
-    } 
-    else {
-      closeIcon.style.display = "none";
-      menuIcon.style.display = "block";
-    }
     setIcon((preValue) => (preValue === 0 ? 1 : 0));
   };
 
   const OptionsContainer = (props) => {
     const { options, type } = props;
     return (
-      <div className="optionsContainer" onClick={MouseLeave}>
+      <div className="optionsContainer" onClick={() => setIcon((preValue) => (preValue === 0 ? 1 : 0))}>
         {options?.map((item, key) => (
           <Link
             key={key}
@@ -113,11 +108,11 @@ export default function Navbar() {
     );
   };
   return (
-    <div className="nav-body">
-      <Link to="/" className="heading">MovieMart</Link>
-      <div className="nav-items"  onBlur={MouseLeave}>
+    <div className="nav-body" onBlur={() => setIcon(0)}>
+      <Link to="/" className="heading" onClick={() => setIcon(0)}>MovieMart</Link>
+      <div className="nav-items"  onBlur={() => setIcon(0)}>
         <ul>
-          <Link to="/" onClick={handleIconClick}>
+          <Link to="/" onClick={MouseLeave}>
             Home
           </Link>
           <nav className="country" onClick={MouseEnter}>
@@ -128,7 +123,7 @@ export default function Navbar() {
             Genre
             <OptionsContainer type="genre" options={genre} />
           </nav>
-          <Link to="shows" onClick={handleIconClick}>
+          <Link to="/" onClick={MouseLeave}>
             TV Shows
           </Link>
         </ul>
@@ -137,16 +132,16 @@ export default function Navbar() {
             type="text"
             className="search-bar"
             placeholder="Search"
-            onChange={handleOnClick}
+            onChange={handleOnSearchClick}
             onKeyDown = {(e) => e.key==='Enter'?MouseLeave:'' }
           />
         </div>
       </div>
       <div className="menu-bar">
-        <nav className="menu" id="menu" onClick={handleIconClick}>
+        <nav className="menu" id="menu" onClick={() => setIcon((preValue) => (preValue === 0 ? 1 : 0))}>
           <MenuIcon />
         </nav>
-        <nav className="close" id="close" onClick={handleIconClick}>
+        <nav className="close" id="close" onClick={() => setIcon((preValue) => (preValue === 0 ? 1 : 0))}>
           <CloseIcon />
         </nav>
       </div>

@@ -31,12 +31,12 @@ ul{
     justify-content: space-between;
     padding: 0 0 0 25px;
 }
-ul>*{
+.nav-items ul>*{
     text-decoration: none;
     list-style-type: none;
     position: relative;
     color: white;
-    padding-left: 15px;
+    padding-left: 40px;
 }
 
 .search{
@@ -108,7 +108,7 @@ ul>*:hover{
         justify-content: center;
         z-index: 1;
         right: 0;
-        top: 9vh;
+        top: 8.9vh;
     }
     .nav-body .nav-items ul{
         row-gap: 10px;
@@ -116,7 +116,7 @@ ul>*:hover{
         flex-direction: column;
         width: fit-content;
     }
-    ul>*{
+    .nav-items ul>*{
         padding: 0;
     }
     .optionsContainer{

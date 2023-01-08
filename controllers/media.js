@@ -3,7 +3,8 @@ const asyncHandler = require("../middleware/async");
 // @descE   Get all new movies
 //@route    GET /media
 exports.getNewMedia = asyncHandler(async (req, res, next) => {
-  const url = `https://api.themoviedb.org/3/trending/movie/week?api_key=${process.env.TMDB_API_KEY}`;
+  const {page} = req.query;
+  const url = `https://api.themoviedb.org/3/trending/movie/week?api_key=${process.env.TMDB_API_KEY}&page=${page}`;
   const data = await axios.get(url, {
     headers: { "Accept-Encoding": "gzip,deflate,compress" },
   });
@@ -19,7 +20,8 @@ exports.getNewMedia = asyncHandler(async (req, res, next) => {
 //@route   GET /media/find/:name
 exports.getByTitle = asyncHandler(async (req, res, next) => {
   const { name } = req.params;
-  const url = `https://api.themoviedb.org/3/search/movie?api_key=${process.env.TMDB_API_KEY}&language=en-US&query=${name}&page=1`;
+  const {page} = req.query;
+  const url = `https://api.themoviedb.org/3/search/movie?api_key=${process.env.TMDB_API_KEY}&language=en-US&query=${name}&page=${page}`;
   const data = await axios.get(url, {
     headers: { "Accept-Encoding": "gzip,deflate,compress" },
   });
@@ -99,7 +101,8 @@ exports.getAllGenres = asyncHandler(async (req, res, next) => {
 //@route     GET /media/movies/:genre
 exports.getMoviesByGenre = asyncHandler(async (req, res, next) => {
   const { genre } = req.params;
-  const url = `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.TMDB_API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&with_genres=${genre}&with_watch_monetization_types=flatrate`;
+  const {page} = req.query
+  const url = `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.TMDB_API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&with_genres=${genre}&with_watch_monetization_types=flatrate&page=${page}`;
   const data = await axios.get(url, {
     headers: { "Accept-Encoding": "gzip,deflate,compress" },
   });
@@ -142,8 +145,9 @@ exports.getCountries = asyncHandler(async (req, res, next) => {
 //@desc     Get recommended movies
 //@route    GET /media/languages/:language
 exports.getMoviesByLanguage = asyncHandler(async (req,res,next)=> {
-  const {language} = req.params
-  const url = `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.TMDB_API_KEY}&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_original_language=${language}&with_watch_monetization_types=flatrate`
+  const {language} = req.params;
+  const {page} = req.query;
+  const url = `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.TMDB_API_KEY}&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_original_language=${language}&with_watch_monetization_types=flatrate&page=${page}`
   const data = await axios.get(url, {
     headers: { "Accept-Encoding": "gzip,deflate,compress" },
   });

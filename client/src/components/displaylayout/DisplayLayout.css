@@ -12,6 +12,7 @@
     flex-wrap: wrap;
     column-gap: 25px;
     row-gap: 25px;
+    margin-bottom: 25px;
 }
 .main-container>*:nth-child(1){
     width: 100%;
@@ -79,6 +80,15 @@
     border: 1px solid white;
     background-color: rgba(0, 0, 0, 0.7);
 }
+.pagination{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+    color: white;
+    font-size: xx-large;
+}
+
 
 .movie-container>*:nth-child(1):hover{
     cursor: pointer;
