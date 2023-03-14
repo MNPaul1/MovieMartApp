@@ -83,15 +83,14 @@
     row-gap: 12px;
     column-gap: 8px;
 }
-.cast>*:nth-child(1){
-    flex: 1 1 100%;
-}
 .cast>*{
     width: 115px;
 
 }
 .castContainer img{
     width: inherit;
+    min-height: 172.03px;
+    height: inherit;
     border-radius: 8px;
 }
 .castContainer>*:nth-child(2){
@@ -118,6 +117,7 @@
         row-gap: 10px;
     }
 }
+
 @media screen and (max-width: 770px) {
     .aboutMovie{
         flex-direction: row;

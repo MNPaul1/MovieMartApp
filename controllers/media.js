@@ -16,12 +16,12 @@ exports.getNewMedia = asyncHandler(async (req, res, next) => {
   });
 });
 
-// @desc   Get a movie by it's name using imdb api
+// @desc   Get a movie
 //@route   GET /media/find/:name
 exports.getByTitle = asyncHandler(async (req, res, next) => {
   const { name } = req.params;
   const {page} = req.query;
-  const url = `https://api.themoviedb.org/3/search/movie?api_key=${process.env.TMDB_API_KEY}&language=en-US&query=${name}&page=${page}`;
+  const url = `https://api.themoviedb.org/3/search/movie?api_key=${process.env.TMDB_API_KEY}&language=en-US&query=${name}&page=${page}&include_adult=false`;
   const data = await axios.get(url, {
     headers: { "Accept-Encoding": "gzip,deflate,compress" },
   });
@@ -157,4 +157,32 @@ exports.getMoviesByLanguage = asyncHandler(async (req,res,next)=> {
     count: movies.length,
     data: movies,
   });
+})
+
+//@desc     Get top rated movies
+//@route    GET /media/toprated
+exports.getTopRated = asyncHandler(async (req,res,next) =>{
+  const {page} = req.query;
+  const url = `https://api.themoviedb.org/3/movie/top_rated?api_key=${process.env.TMDB_API_KEY}&page=${page}`;
+  const data = await axios.get(url)
+  let movies = data.data
+  res.status(200).json({
+    success: true,
+    count: movies.length,
+    data: movies,
+  });
+})
+
+//@desc Get movie Trailer
+//@route GET /media/movie/trailer/:id
+exports.getTrailer = asyncHandler(async (req,res,next) =>{
+  const {id} = req.params
+  const url = `https://api.themoviedb.org/3/movie/${id}/videos?api_key=${process.env.TMDB_API_KEY}&language=en-US`
+  const data = await axios.get(url)
+  let {results} = data.data
+  results = results?.filter((video) => video.type==='Trailer')[0]
+  res.status(200).json({
+    success:true,
+    data: results
+  })
 })

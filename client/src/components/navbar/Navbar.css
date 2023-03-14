@@ -36,12 +36,15 @@ ul{
     list-style-type: none;
     position: relative;
     color: white;
-    padding-left: 40px;
+    margin-left: 40px;
 }
 
 .search{
-    font-size: inherit;
+    font-size: 30px;
+    text-align: center;
 }   
+
+
 
 .search>*{
     background-color: #3b3b41;
@@ -91,9 +94,34 @@ ul>*:hover{
 .close{
     display: none;
 }
+.dropdown:hover .optionsContainer{
+    display: flex;
+}
 @media screen and (max-width:550px) {
     .nav-body>*:nth-child(1){
         font-size: x-large;
+    }
+
+}
+@media screen and (max-width:935px) {
+    .menu-bar{
+        display: flex;
+        justify-content: flex-end;
+        flex: 1;
+    }
+    .optionsContainer{
+        min-width: 0;
+        flex-direction: row;
+    }
+    .optionsContainer>*{
+        flex: 1 1 100%;
+        max-width: 100%;
+    }
+    .nav-items ul>*{
+        padding: 0;
+    }
+    .optionsContainer{
+        right: 0;
     }
     .nav-body{
         position: relative;
@@ -115,26 +143,6 @@ ul>*:hover{
         padding: 0;
         flex-direction: column;
         width: fit-content;
-    }
-    .nav-items ul>*{
-        padding: 0;
-    }
-    .optionsContainer{
-        right: 0;
-    }
-    
-    .optionsContainer{
-        min-width: 0;
-        flex-direction: row;
-    }
-    .optionsContainer>*{
-        flex: 1 1 100%;
-        max-width: 100%;
-    }
-    .menu-bar{
-        display: flex;
-        justify-content: flex-end;
-        flex: 1;
     }
 }
 @media screen and (max-width:800px) {

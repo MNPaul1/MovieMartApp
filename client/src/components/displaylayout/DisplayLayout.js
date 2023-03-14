@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 import axios from "axios";
 import "./DisplayLayout.css";
 import ISO6391 from 'iso-639-1';
-import { Pagination } from "@mui/material";
+import { capitalize, Pagination } from "@mui/material";
 import MovieContainer from "../MovieContainer";
 import LinearProgress from '@mui/material/LinearProgress';
 
@@ -12,7 +12,6 @@ export default function DisplayLayout() {
   let pathname = locaion.pathname;
   let type = pathname.split("/");
   type = type.slice(-1)[0] === "" ? "Home" : type.slice(-1)[0];
-  
   const id = locaion.state?.id;
   const language = locaion.state?.language;
   const name = locaion.state?.name;
@@ -20,6 +19,7 @@ export default function DisplayLayout() {
   const [page,setPage] = useState(1)
   const [loading, setLoading] = useState(false)
   useEffect(()=>{
+    document.title = 'Movie Mart - '+ capitalize(type)
     async function fetchMedia(page) {
       let mediaItems, query;
       if (type === "Home" || type === "") {
@@ -30,6 +30,9 @@ export default function DisplayLayout() {
         query = `/media/find/${name}`
       }else if(language){
         query = `/media/languages/${language}`
+      }
+      else if (type==='top-rated'){
+        query = '/media/toprated'
       }
       setLoading(true)
       mediaItems = await axios.get(`${query}?page=${page}`)
@@ -45,13 +48,13 @@ export default function DisplayLayout() {
   const handlePagination = (e,value) =>{
     setPage(value)
   }
-
+  console.log(currentMedia)
   return (
     <>
     {loading&&<LinearProgress />}
     {!loading&&<div className="main-container">
       <h1>
-        {language?ISO6391.getName(language):type.replaceAll("-"," ").toUpperCase()} <div className="underline"></div>
+        {language?ISO6391.getName(language):type.replace ("-"," ").toUpperCase()} <div className="underline"></div>
       </h1>
       {currentMedia.results?.length===0&&<div>No result found</div>}
       {currentMedia.results?.length!==0&&<div className="pagination">

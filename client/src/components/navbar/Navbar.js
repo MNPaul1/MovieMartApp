@@ -7,8 +7,6 @@ import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 
 export default function Navbar() {
-  //Detect if it's languages hover or genres hover because both uses same components it helps to detect the req.
-  const [options, setOptions] = useState(0);
   //Gives all the values of languages
   const [languageOptions, setLanOptions] = useState([]);
   //Gives all the genres provided by the API
@@ -40,7 +38,7 @@ export default function Navbar() {
     fetchGenres();
     //setting windowWidth everytime when there is resize
     window.addEventListener("resize", handleResize, false);
-    if (windowWidth <= 550) {
+    if (windowWidth <= 935) {
       const menuIcon = document.querySelector(".menu");
       const closeIcon = document.querySelector(".close");
       if (icon === 0) {
@@ -69,19 +67,7 @@ export default function Navbar() {
       navigate(`/search/${slugify(value)}`, { state: { name: value } });
     }
   };
-  const MouseEnter = (e) => {
-    const { className: parent } = e.target;
-    setOptions(parent === "country" ? 0 : 1);
-    document.querySelector(
-      `.${parent ? parent : "country"} .optionsContainer`
-    ).style.display = "flex";
-  };
 
-  const MouseLeave = (e) => {
-    document.getElementsByClassName(`optionsContainer`)[options].style.display =
-      "none";
-    setIcon((preValue) => (preValue === 0 ? 1 : 0));
-  };
 
   const OptionsContainer = (props) => {
     const { options, type } = props;
@@ -108,22 +94,22 @@ export default function Navbar() {
     );
   };
   return (
-    <div className="nav-body" onBlur={() => setIcon(0)}>
-      <Link to="/" className="heading" onClick={() => setIcon(0)}>MovieMart</Link>
-      <div className="nav-items"  onBlur={() => setIcon(0)}>
+    <div className="nav-body">
+      <Link to="/" className="heading">MovieMart</Link>
+      <div className="nav-items">
         <ul>
-          <Link to="/" onClick={MouseLeave}>
-            Home
+          <Link to="/movies/top-rated">
+            Top Rated
           </Link>
-          <nav className="country" onClick={MouseEnter}>
+          <nav className="dropdown">
             Languages
             <OptionsContainer type="country" options={languageOptions} />
           </nav>
-          <nav className="genre" onClick={MouseEnter}>
+          <nav className="dropdown">
             Genre
             <OptionsContainer type="genre" options={genre} />
           </nav>
-          <Link to="/" onClick={MouseLeave}>
+          <Link to="/">
             TV Shows
           </Link>
         </ul>
@@ -132,16 +118,14 @@ export default function Navbar() {
             type="text"
             className="search-bar"
             placeholder="Search"
-            onChange={handleOnSearchClick}
-            onKeyDown = {(e) => e.key==='Enter'?MouseLeave:'' }
-          />
+            onChange={handleOnSearchClick}/>
         </div>
       </div>
-      <div className="menu-bar">
-        <nav className="menu" id="menu" onClick={() => setIcon((preValue) => (preValue === 0 ? 1 : 0))}>
+      <div className="menu-bar" onClick={() => setIcon((preValue) => (preValue === 0 ? 1 : 0))}>
+        <nav className="menu" id="menu">
           <MenuIcon />
         </nav>
-        <nav className="close" id="close" onClick={() => setIcon((preValue) => (preValue === 0 ? 1 : 0))}>
+        <nav className="close" id="close">
           <CloseIcon />
         </nav>
       </div>

@@ -1,28 +1,33 @@
 import Rating from "@mui/material/Rating";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { LinearProgress } from "@mui/material";
 import { useLocation } from "react-router-dom";
 import "./AboutMovie.css";
 import StarIcon from "@mui/icons-material/Star";
 import MovieContainer from "../MovieContainer";
 import ISO6391 from "iso-639-1";
-import { LinearProgress } from "@mui/material";
 export default function AboutMovie() {
   const [movieData, setData] = useState([]);
   const [suggestMovies, setMovies] = useState([]);
+  const [key, setKey] = useState("");
   const location = useLocation();
   const { id } = location.state;
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     async function fetchData() {
-      setLoading(true)
+      setLoading(true);
       const res = await axios.get(`/media/${id}`);
       const suggestedRes = await axios.get(`/media/recommendedmovies/${id}`);
+      const trailer = await axios.get(`/media/movie/trailer/${id}`);
+      const { key } = trailer.data.data;
+
       const { data } = res.data;
       const { data: suggestedData } = suggestedRes.data;
       setData(data);
       setMovies(suggestedData);
-      setLoading(false)
+      setKey(key);
+      setLoading(false);
     }
     fetchData();
   }, [id]);
@@ -43,12 +48,12 @@ export default function AboutMovie() {
 
   const CastContainer = (props) => {
     const { name, profile_path, character } = props.item;
+    const img_url = profile_path
+      ? `https://image.tmdb.org/t/p/w500/${profile_path}`
+      : "https://dans.knaw.nl/wp-content/uploads/2021/08/person-no-picture.png";
     return (
       <div className="castContainer">
-        <img
-          src={`https://image.tmdb.org/t/p/w500/${profile_path}`}
-          alt={name}
-        />
+        <img src={img_url} alt={name} />
         <nav>{name}</nav>
         <nav>{character}</nav>
       </div>
@@ -70,6 +75,7 @@ export default function AboutMovie() {
       </div>
     );
   };
+
   return (
     <>
       {loading && <LinearProgress />}
@@ -105,8 +111,13 @@ export default function AboutMovie() {
               <p>
                 <b> Release Date:</b> {release_date}
               </p>
+              <a
+                href={`https://www.youtube.com/embed/${key}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >Trailer</a>
+              <h3>Top Cast</h3>
               <div className="cast">
-                <h3>Top Cast</h3>
                 {cast?.map((item, key) => (
                   <CastContainer key={key} item={item} />
                 ))}

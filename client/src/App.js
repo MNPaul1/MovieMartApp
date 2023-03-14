@@ -12,6 +12,7 @@ function App() {
     <Routes>
 
     <Route path="/" element={<DisplayLayout/>} />
+    <Route path="/movies/top-rated" element={<DisplayLayout/>} />
     <Route path="/shows" element={<DisplayLayout />} />
     <Route path="/countries/:name" element={<DisplayLayout />} />
     <Route path="/genre/:name" element={<DisplayLayout />} />
